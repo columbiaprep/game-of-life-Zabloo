@@ -5,32 +5,32 @@ public class Simulation {
 
   public Simulation(int t) {
     tickLength = t;
-    board = new Board(10, 10);
+    board = new Board();
     startSimulation();
   }
 
-  public void startSimulation() { 
+  public void startSimulation() {
     while (true) {
-      pause(); 
+      pause();
       tick();
     }
   }
-  
-  /* each tick, you should: 
+
+  /* each tick, you should:
   1) call the method createNewGeneration()
   2) display the board
   */
   public void tick() {
     board.createNewGeneration();
-    board.displayBoard();
+    board.display();
   }
 
   public void pause() {
     try {
-        Thread.sleep(tickLength);
+      Thread.sleep(tickLength);
     }
     catch(InterruptedException e){
       System.out.println("Whoops my code had a boo-boo");
-    } 
+    }
   }
 }
