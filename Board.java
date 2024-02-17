@@ -4,11 +4,18 @@ public class Board {
   private AliveCellsList aliveCells = new AliveCellsList();
 
   public Board() {
-    aliveCells.add(new Coord(0, 0));
-    aliveCells.add(new Coord(0, 1));
-    aliveCells.add(new Coord(1, 0));
-    aliveCells.add(new Coord(10, 10));
-    aliveCells.add(new Coord(-5, -10));
+    try {
+      aliveCells.addCell(new Coord(0, 0));
+      aliveCells.addCell(new Coord(0, 1));
+      aliveCells.addCell(new Coord(1, 0));
+      aliveCells.addCell(new Coord(5, 6));
+      aliveCells.addCell(new Coord(-5, -3));
+      aliveCells.addCell(new Coord(7, 0));
+      aliveCells.addCell(new Coord(-7, 0));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    // System.out.println(aliveCells.getTopMost());
   }
 
 
@@ -54,7 +61,9 @@ public class Board {
   // use extrema to define a rectangle that contains all alive cells and print it
   public void display() {
     // start from top left corner, work down and right
-    for (long y = aliveCells.getTopMost().getY(); y <= aliveCells.getBottomMost().getY(); y++) {
+    System.out.println("From " + aliveCells.getTopMost().getY() + " to " + aliveCells.getBottomMost().getY());
+    System.out.println("From " + aliveCells.getLeftMost().getX() + " to " + aliveCells.getRightMost().getX());
+    for (long y = aliveCells.getTopMost().getY(); y >= aliveCells.getBottomMost().getY(); y--) {
       for (long x = aliveCells.getLeftMost().getX(); x <= aliveCells.getRightMost().getX(); x++) {
         if (aliveCells.findIndexOfCoord(new Coord(x, y)) != -1) // check if cell is alive
           System.out.print("🦠");

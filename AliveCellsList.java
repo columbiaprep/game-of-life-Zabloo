@@ -10,11 +10,12 @@ public class AliveCellsList extends ArrayList<Coord> {
 
   public void addCell(Coord c) throws Exception {
     // first ensure that there are no duplicates
-    if (findIndexOfCoord(c) != -1) {
+    if (findIndexOfCoord(c) == -1) {
       // then loop through list and insert it in appropriate position (if using binary search method)
       if (rightMost == null && topMost == null && leftMost == null && bottomMost == null) {
-        if (size() == 0)
+        if (size() == 0) {
           rightMost = topMost = leftMost = bottomMost = c;
+        }
         else throw new Exception("Must call refreshExtrema in between removing a cell and adding another one!");
       }
       testForExtrema(c);
@@ -28,7 +29,8 @@ public class AliveCellsList extends ArrayList<Coord> {
       remove(findIndexOfCoord(c));
       rightMost = topMost = leftMost = bottomMost = null; // to show that these are invalid until refreshExtrema is called
     } catch (Exception e) {
-      System.out.println("Could not remove cell that is not in list");
+      // System.out.println("Could not remove cell that is not in list, attempted to input coord of " + c.toString());
+      // e.printStackTrace();
     }
   }
 

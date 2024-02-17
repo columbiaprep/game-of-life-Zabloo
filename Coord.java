@@ -31,6 +31,11 @@ public class Coord {
         return x == otherC.x && y == otherC.y;
     }
 
+    @Override
+    public String toString() {
+        return "( " + x + ", " + y + ")";
+    }
+
     public long getX() {
         return x;
     }
