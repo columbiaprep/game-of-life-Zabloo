@@ -5,6 +5,7 @@ public class Board {
 
   public Board() {
     try {
+      // add a blinker and a glider
       aliveCells.addCell(new Coord(0, 0));
       aliveCells.addCell(new Coord(0, 1));
       aliveCells.addCell(new Coord(0, -1));
