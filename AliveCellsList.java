@@ -13,7 +13,7 @@ public class AliveCellsList extends ArrayList<Coord> {
     if (findIndexOfCoord(c) != -1) {
       // then loop through list and insert it in appropriate position (if using binary search method)
       if (rightMost == null && topMost == null && leftMost == null && bottomMost == null) {
-        if (size() == 1)
+        if (size() == 0)
           rightMost = topMost = leftMost = bottomMost = c;
         else throw new Exception("Must call refreshExtrema in between removing a cell and adding another one!");
       }
@@ -23,20 +23,24 @@ public class AliveCellsList extends ArrayList<Coord> {
   }
 
 
-  public void removeCell(Coord c) {
-    remove(c);
-    rightMost = topMost = leftMost = bottomMost = null; // to show that these are invalid until refreshExtrema is called
+  public void removeCell(Coord c) { // should always call refreshExtrema() after removing 1 or more cells
+    try {
+      remove(findIndexOfCoord(c));
+      rightMost = topMost = leftMost = bottomMost = null; // to show that these are invalid until refreshExtrema is called
+    } catch (Exception e) {
+      System.out.println("Could not remove cell that is not in list");
+    }
   }
 
 
-  public void refreshExtrema() { // should always be called after removing 1 or more cells, before adding or getting any
+  public void refreshExtrema() { // should always be called after calling removeCell()
     for (Coord a : this)
       testForExtrema(a);
   }
 
 
   // checks if a coordinate is an extrema and sets fields appropriately
-  private void testForExtrema(Coord c) {
+  public void testForExtrema(Coord c) {
     if (c.getX() > rightMost.getX())
       rightMost = c;
     if (c.getY() > topMost.getY())
@@ -56,5 +60,22 @@ public class AliveCellsList extends ArrayList<Coord> {
         return a;
     }
     return -1;
+  }
+
+
+  public Coord getRightMost() {
+    return rightMost;
+  }
+
+  public Coord getTopMost() {
+    return topMost;
+  }
+
+  public Coord getLeftMost() {
+    return leftMost;
+  }
+
+  public Coord getBottomMost() {
+    return bottomMost;
   }
 }

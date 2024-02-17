@@ -6,6 +6,20 @@ public class Coord {
         this.y = y;
     }
 
+    // array length 8
+    public Coord[] getAdjacentCoords() {
+        return new Coord[] {
+                new Coord(x + 1, y),
+                new Coord(x + 1, y + 1),
+                new Coord(x, y + 1),
+                new Coord(x - 1, y + 1),
+                new Coord(x - 1, y),
+                new Coord(x - 1, y - 1),
+                new Coord(x, y - 1),
+                new Coord(x + 1, y - 1)
+        };
+    }
+
     @Override
     public boolean equals(Object other) {
         Coord otherC;
