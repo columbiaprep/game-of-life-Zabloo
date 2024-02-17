@@ -8,6 +8,14 @@ public class AliveCellsList extends ArrayList<Coord> {
   private Coord bottomMost;
 
 
+  // prevent add from being used on this list
+  @Override
+  public boolean add(Coord c) {
+    System.out.println("DO NOT call the ArrayList add method on an AliveCellsList, use addCell() instead");
+    return false;
+  }
+
+
   public void addCell(Coord c) throws Exception {
     // first ensure that there are no duplicates
     if (findIndexOfCoord(c) == -1) {
@@ -19,7 +27,7 @@ public class AliveCellsList extends ArrayList<Coord> {
         else throw new Exception("Must call refreshExtrema in between removing a cell and adding another one!");
       }
       testForExtrema(c);
-      add(c);
+      super.add(c);
     }
   }
 
