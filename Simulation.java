@@ -11,7 +11,6 @@ public class Simulation {
 
   public void startSimulation() {
     board.display();
-    System.out.println("Displayed");
     while (true) {
       pause();
       tick();

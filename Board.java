@@ -7,11 +7,21 @@ public class Board {
     try {
       aliveCells.addCell(new Coord(0, 0));
       aliveCells.addCell(new Coord(0, 1));
-      aliveCells.addCell(new Coord(1, 0));
-      aliveCells.addCell(new Coord(5, 6));
-      aliveCells.addCell(new Coord(-5, -3));
-      aliveCells.addCell(new Coord(7, 0));
-      aliveCells.addCell(new Coord(-7, 0));
+      aliveCells.addCell(new Coord(0, -1));
+      aliveCells.addCell(new Coord(5, -5));
+      aliveCells.addCell(new Coord(6, -5));
+      aliveCells.addCell(new Coord(7, -5));
+      aliveCells.addCell(new Coord(7, -4));
+      aliveCells.addCell(new Coord(6, -3));
+
+      // add random stuff from x = 15 to 25 and y = 5 to -5
+      for (int x = 15; x <= 25; x++) {
+        for (int y = -5; y <= 5; y++) {
+          if (Math.random() < 0.5)
+            aliveCells.addCell(new Coord(x, y));
+        }
+      }
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -37,15 +47,14 @@ public class Board {
           if (conwayLogicCell(false, deadCellNeighbors)) // now check if our neighbor should be made alive
             cellsToAdd.add(b);
         } else aliveCellNeighbors++;
-
-        // check if our alive cell should be made dead
-        if (!conwayLogicCell(true, aliveCellNeighbors))
-          cellsToDie.add(a);
       }
+      if (!conwayLogicCell(true, aliveCellNeighbors))
+        cellsToDie.add(a);
     }
 
     for (Coord a : cellsToDie)
       aliveCells.removeCell(a);
+    aliveCells.refreshExtrema();
     for (Coord a : cellsToAdd) {
       try {
         aliveCells.addCell(a);
@@ -53,16 +62,19 @@ public class Board {
         e.printStackTrace();
       }
     }
-    aliveCells.refreshExtrema();
   }
 
 
 
   // use extrema to define a rectangle that contains all alive cells and print it
   public void display() {
+    if (aliveCells.size() == 0) {
+      System.out.println("No cells");
+      return;
+    }
     // start from top left corner, work down and right
-    System.out.println("From " + aliveCells.getTopMost().getY() + " to " + aliveCells.getBottomMost().getY());
-    System.out.println("From " + aliveCells.getLeftMost().getX() + " to " + aliveCells.getRightMost().getX());
+    System.out.println("From y " + aliveCells.getTopMost().getY() + " to " + aliveCells.getBottomMost().getY());
+    System.out.println("From x " + aliveCells.getLeftMost().getX() + " to " + aliveCells.getRightMost().getX());
     for (long y = aliveCells.getTopMost().getY(); y >= aliveCells.getBottomMost().getY(); y--) {
       for (long x = aliveCells.getLeftMost().getX(); x <= aliveCells.getRightMost().getX(); x++) {
         if (aliveCells.findIndexOfCoord(new Coord(x, y)) != -1) // check if cell is alive

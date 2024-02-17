@@ -43,6 +43,8 @@ public class AliveCellsList extends ArrayList<Coord> {
 
   // checks if a coordinate is an extrema and sets fields appropriately
   public void testForExtrema(Coord c) {
+    if (rightMost == null && topMost == null && leftMost == null && bottomMost == null)
+      rightMost = topMost = leftMost = bottomMost = c;
     if (c.getX() > rightMost.getX())
       rightMost = c;
     if (c.getY() > topMost.getY())
